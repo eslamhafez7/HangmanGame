@@ -38,6 +38,11 @@ const randomValueNumber = Math.floor(Math.random() * randomPropertyValue.length)
 const randomValueValue = randomPropertyValue[randomValueNumber];
 document.querySelector(".category span").innerHTML = randomPropertyName;
 
+let hintButton = document.querySelector(".hint");
+hintButton.addEventListener("click", () => {
+    showHint(randomValueValue);
+});
+
 
 let lettersGuessContainer = document.querySelector(".letters-guess");
 

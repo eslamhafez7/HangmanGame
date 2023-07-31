@@ -1,6 +1,6 @@
 // Letters
 const letters = "abcdefghijklmnopqrstuvwxyz";
-lettersArray = Array.from(letters);
+let lettersArray = Array.from(letters);
 
 let lettersContainer = document.querySelector(".letters");
 
@@ -13,24 +13,36 @@ lettersArray.forEach(letter => {
 });
 
 //Words
-let data;
-fetch("data.json")
-  .then((response) => response.json())
-  .then((jsonData) => {
-    data = jsonData;
-    const allKeys = Object.keys(data);
-    const randomKeyNumber = Math.floor(Math.random() * allKeys.length);
-    const randomPropertyName = allKeys[randomKeyNumber];
-    const randomPropertyValue = data[randomPropertyName];
-    const randomValueNumber = Math.floor(Math.random() * randomPropertyValue.length);
-    const randomValueValue = randomPropertyValue[randomValueNumber];
-    
-    document.querySelector(".category span").innerHTML = randomPropertyName;
-    document.querySelector(".randomValue span").innerHTML = randomValueValue;
-  })
-  .catch((error) => {
-    console.error("Error fetching JSON data:", error);
-  });
+const words = {
+    programming: ["javascript", "python", "java", "csharp", "html", "css", "ruby", "php", "swift", "typescript"],
+    movies: ["avatar", "titanic", "inception", "jaws", "starwars", "thegodfather", "jurassicpark", "avengers", "frozen", "harrypotter", "interstellar"],
+    people: ["eslam hafez", "picasso", "shakespeare", "mariecurie", "nelsonmandela", "mozart", "cleopatra", "albert einstein", "leonardodavinci", "napoleon", "beethoven"],
+    countries: ["egypt", "palestine", "qatar", "australia", "canada", "germany", "japan", "brazil", "france", "india", "mexico", "russia", "sweden"],
+    animals: ["elephant", "tiger", "giraffe", "dolphin", "penguin", "koala", "lion", "zebra", "kangaroo", "panda"],
+    fruits: ["apple", "banana", "orange", "strawberry", "grape", "watermelon", "mango", "pineapple", "kiwi", "peach"],
+    colors: ["red", "blue", "green", "yellow", "orange", "purple", "pink", "brown", "black", "white"],
+    cars: ["toyota", "honda", "ford", "audi", "bmw", "mercedes", "nissan", "chevrolet", "volkswagen", "hyundai", "borchy"],
+    superheroes: ["spiderman", "superman", "batman", "wonderwoman", "ironman", "thor", "captainamerica", "blackpanther", "hulk", "flash"],
+};
+const allKeys = Object.keys(words);
+
+// Random Key Number of Object Keys
+const randomKeyNumber = Math.floor(Math.random() * allKeys.length);
+// Random Property Name of Object Keys
+const randomPropertyName = allKeys[randomKeyNumber];
+// Random Value(name) Of Object Values [array]
+const randomPropertyValue = words[randomPropertyName];
+// Random Value(number) Of Object Values [array] 
+const randomValueNumber = Math.floor(Math.random() * randomPropertyValue.length);
+// Random Value Of the Object Values [name of the value => string]
+const randomValueValue = randomPropertyValue[randomValueNumber];
+document.querySelector(".category span").innerHTML = randomPropertyName;
+
+
+let hintButton = document.querySelector(".hint");
+hintButton.addEventListener("click", () => {
+    showHint(randomValueValue);
+});
 
 
 let lettersGuessContainer = document.querySelector(".letters-guess");
@@ -50,16 +62,12 @@ let allGuessSpans = document.querySelectorAll(".letters-guess span");
 // Set Wrong Attempts
 let wrongAttemps = 0;
 // select the draw
+let correctAttempts = 0;
 let hangmanDraw = document.querySelector(".hangman-draw");
 
 // Wrong Box 
 let wrongBox = document.querySelector(".wrong-box");
-
-function checkIfWordGuessed() {
-    const guessedWord = [...allGuessSpans].map(span => span.innerHTML.toLowerCase()).join('');
-    const originalWord = randomValueValue.toLowerCase().replace(/\s/g, '');
-    return guessedWord === originalWord;
-}
+let correctBox = document.querySelector(".correct-box");
 
 // Add a gameStatus variable to track if the game is ongoing
 let gameStatus = true;
@@ -70,52 +78,59 @@ function checkIfWordGuessed() {
     return guessedWord === originalWord;
 }
 
-function handleClick(e) {
-    if (!gameStatus) return; // If the game is finished, ignore clicks
 
+// Handle Letters Clicking
+function handleClick(e) {
+    if(!gameStatus) return;
     let theStatus = false;
-    if (e.target.className === "letter-box") {
-        e.target.classList.add("clicked-letter");
+    if(e.target.className === "letter-box") {
+        e.target.classList.add("clicked-letter")
         let clickedLetter = e.target.innerHTML.toLowerCase();
         let chosenWord = Array.from(randomValueValue.toLowerCase());
-
+    
         chosenWord.forEach((wordLetter, wordIndex) => {
-            if (clickedLetter == wordLetter) {
+            if(clickedLetter == wordLetter) {
                 theStatus = true;
                 allGuessSpans.forEach((span, spanIndex) => {
-                    if (wordIndex == spanIndex) {
+                    if(wordIndex == spanIndex) {
                         span.innerHTML = clickedLetter;
                     }
-                });
+                })
             }
         });
         console.log(chosenWord);
         // Out Of Loop
-        if (theStatus !== true) {
+        if(theStatus !== true) {
             wrongAttemps++;
             wrongBox.innerHTML = wrongAttemps;
             wrongBox.style.backgroundColor = "#ff0000bd";
             hangmanDraw.classList.add(`wrong-${wrongAttemps}`);
             document.getElementById("fail").play();
-            if (wrongAttemps === 8) {
+                
+            if(wrongAttemps === 8) {
                 lettersContainer.classList.add("finished");
                 endGame();
-                gameStatus = false; // Mark the game as finished
             }
-        } else {
+        }else {
+            correctAttempts++;
+            correctBox.innerHTML = correctAttempts;
+            correctBox.style.backgroundColor = "#7cd1ae";
+            window.localStorage.setItem("correctValue", correctAttempts);
             document.getElementById("success").play();
-            if (checkIfWordGuessed()) {
+            if(checkIfWordGuessed()) {
                 winGame();
-                gameStatus = false; // Mark the game as finished
+                gameStatus = false;
             }
         }
     }
 }
-
 document.addEventListener("click", handleClick);
 
-// Handle Letters Clicking
+// On The Game End (Win | Lose)
+
 function endGame() {
+    clearInterval(timerInterval);
+    endAnimation();
     Swal.fire({
         icon: 'error',
         title: 'Oops..Game Over',
@@ -130,21 +145,61 @@ function endGame() {
         if (result.isConfirmed) {
             window.location.reload();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-            window.history.back();
+            window.location.reload();
         }
     });  
     document.getElementById("over").play(); 
 };
 
 function winGame() {
+    document.getElementById("win").play();
+    // window.localStorage.getItem("correctValue", correctBox.innerHTML);
     Swal.fire({
         icon: 'success',
         title: 'Congratulations!',
         text: 'You guessed the correct word!',
-        confirmButtonText: 'Keep Going',
+        confirmButtonText: 'New Game',
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.reload();
         }
     });
+};
+
+// Timer
+let timeLimit = 100;
+let timerInterval;
+
+let timerDiv = document.querySelector("#timer p");
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timeLimit--;
+        timerDiv.innerHTML = timeLimit;
+        if(timeLimit === 20) {
+            timerDiv.style.backgroundColor = "rgba(255, 0, 0, 0.74)";
+            startAnimation();
+        }
+        if (timeLimit <= 0) {
+            clearInterval(timerInterval);
+            endGame();
+        }
+    }, 1000);
 }
+window.onload = function () {
+    startTimer();
+}
+function startAnimation() {
+    timerDiv.style.animationPlayState = "running";
+}
+function endAnimation() {
+    timerDiv.style.animationPlayState = "paused";
+}
+document.querySelector(".restart i").addEventListener("click", () => {
+    window.location.reload();
+});
+document.querySelector(".help").addEventListener("click", (e) => {
+    e.preventDefault();
+});
+const currentYear = new Date().getFullYear();
+document.querySelector(".copyright span").textContent = currentYear;
