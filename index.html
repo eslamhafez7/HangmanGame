@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <link rel="shortcut icon" href="src/favicon.png" sizes="32*32" type="image/x-icon">
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-info">
+            <p class="game-name">Hangman</p>
+            <div class="category">
+                Word From : <span></span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="hangman-draw">
+                <div class="the-draw">
+                    <div class="the-stand"></div>
+                    <div class="hang"></div>
+                    <div class="rope"></div>
+                    <div class="the-man">
+                        <div class="head"></div>
+                        <div class="body"></div>
+                        <div class="hands"></div>
+                        <div class="legs"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="letters"></div>
+        </div>
+        <hr>
+        <div class="letters-guess"></div>
+        <div class="options-box">
+            <div id="timer">
+                <span>Remining:</span>
+                <p></p>
+            </div> 
+            <div class="correct-div">
+                <span>Correct Attempts</span>
+                <p class="correct-box">0</p>
+            </div>
+            <div class="wrong-div">
+                <span>Wrong Attempts</span>
+                <p class="wrong-box">0</p>
+            </div>
+            <div class="restart">
+                <span>New Game</span>
+                <i class="fa-solid fa-rotate-right"></i>
+            </div>
+        </div>
+        <div class="footer">
+            <a href="#" class="help">If You Need Help, Open The Console</a>
+            <p class="copyright">&copy; Eslam Hafez <span>2023</span></p>
+        </div>
+    </div>
+    <audio src="src/right-click.mp3" id="success" preload="auto"></audio>
+    <audio src="src/wrong-click.mp3" id="fail" preload="auto"></audio>
+    <audio src="src/wah-wah-sad-trombone-6347.mp3" id="over" preload="auto"></audio>
+    <audio src="src/yay-6120.mp3" id="win" preload="auto"></audio>
+
+
+    <script src="javascript/sweetalert2.all.min.js"></script>
+    <script type="module" src="javascript/main.js"></script>
+    <!-- <script src="javascript/test.js"></script> -->
+</body>
+</html>

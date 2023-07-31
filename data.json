@@ -1,0 +1,11 @@
+{
+    "programming": ["javascript", "python", "java", "csharp", "html", "css", "ruby", "php", "swift", "typescript"],
+    "movies": ["avatar", "titanic", "inception", "jaws", "starwars", "thegodfather", "jurassicpark", "avengers", "frozen", "harrypotter", "interstellar"],
+    "people": ["eslam hafez", "picasso", "shakespeare", "mariecurie", "nelsonmandela", "mozart", "cleopatra", "albert einstein", "leonardodavinci", "napoleon", "beethoven"],
+    "countries": ["egypt", "palestine", "qatar", "australia", "canada", "germany", "japan", "brazil", "france", "india", "mexico", "russia", "sweden"],
+    "animals": ["elephant", "tiger", "giraffe", "dolphin", "penguin", "koala", "lion", "zebra", "kangaroo", "panda"],
+    "fruits": ["apple", "banana", "orange", "strawberry", "grape", "watermelon", "mango", "pineapple", "kiwi", "peach"],
+    "colors": ["red", "blue", "green", "yellow", "orange", "purple", "pink", "brown", "black", "white"],
+    "cars": ["toyota", "honda", "ford", "audi", "bmw", "mercedes", "nissan", "chevrolet", "volkswagen", "hyundai", "borchy"],
+    "superheroes": ["spiderman", "superman", "batman", "wonderwoman", "ironman", "thor", "captainamerica", "blackpanther", "hulk", "flash"]
+}
