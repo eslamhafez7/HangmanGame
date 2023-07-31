@@ -319,9 +319,12 @@ hr {
 .copyright {
     color: #333333;
 }
-@media (min-width: 300px) and (max-width:350px){
+@media (min-width: 300px) and (max-width:370px){
     .hangman-draw .the-draw {
         left: -20px;
+    }
+    .footer {
+        flex-direction: column;
     }
 }
 @media screen and (max-width: 760px) {
