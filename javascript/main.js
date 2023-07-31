@@ -187,6 +187,8 @@ function startAnimation() {
 document.querySelector(".restart i").addEventListener("click", () => {
     window.location.reload();
 });
-
+document.querySelector(".help").addEventListener("click", (e) => {
+    e.preventDefault();
+});
 const currentYear = new Date().getFullYear();
 document.querySelector(".copyright span").textContent = currentYear;
