@@ -123,6 +123,8 @@ document.addEventListener("click", handleClick);
 // On The Game End (Win | Lose)
 
 function endGame() {
+    clearInterval(timerInterval);
+    endAnimation();
     Swal.fire({
         icon: 'error',
         title: 'Oops..Game Over',
@@ -183,6 +185,9 @@ window.onload = function () {
 }
 function startAnimation() {
     timerDiv.style.animationPlayState = "running";
+}
+function endAnimation() {
+    timerDiv.style.animationPlayState = "paused";
 }
 document.querySelector(".restart i").addEventListener("click", () => {
     window.location.reload();
