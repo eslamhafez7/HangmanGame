@@ -20,7 +20,6 @@ const wordHints = {
     frozen: "An animated musical film produced by Walt Disney Animation Studios.",
     harrypotter: "A fantasy film series based on the novels by J.K. Rowling.",
     interstellar: "A science fiction film directed by Christopher Nolan.",
-    "eslam hafez": "An AI language model that doesn't need a hint!",
     picasso: "A famous Spanish painter and sculptor.",
     shakespeare: "A renowned playwright and poet from England.",
     mariecurie: "A pioneering physicist and chemist, famous for her research on radioactivity.",
